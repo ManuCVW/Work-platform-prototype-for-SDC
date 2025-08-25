@@ -1,0 +1,140 @@
+/* Variables de color */
+:root {
+    --color-fondo: #ffffff;
+    --color-texto: #212121;
+    --color-header: #007bff;
+    --color-header-texto: #ffffff;
+    --color-boton: #6c757d;
+    --color-boton-hover: #0056b3;
+}
+
+/* Modo oscuro */
+.tema-oscuro {
+    --color-fondo: #121212;
+    --color-texto: #e0e0e0;
+    --color-header: #0d47a1;
+    --color-header-texto: #ffffff;
+    --color-boton: #90a4ae;
+    --color-boton-hover: #64b5f6;
+}
+
+/* Estilos base */
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: var(--color-header);
+    color: var(--color-header-texto);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+header img {
+    height: 50px;
+    padding-left: 5px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: var(--color-header-texto);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: var(--color-boton-hover);
+}
+
+.botones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.boton-cerrar {
+    background-color: var(--color-boton);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button {
+    background-color: var(--color-boton);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--color-boton-hover);
+}
+
+main {
+    padding: 20px;
+    text-align: center; /* Centrar el contenido */
+}
+
+main h1 {
+    color: var(--color-header); /* Mismo azul electrico que el header */
+    font-size: 2.5em;
+}
+
+main p {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+
+
+
+
+/* Estilos normales (modo claro) */
+table {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+table th, table td {
+    background-color: #f8f9fa;
+    color: #000000;
+}
+
+/* Estilos para modo oscuro */
+body.tema-oscuro table {
+    background-color: #2c2c2c;
+    color: #ffffff;
+}
+
+body.tema-oscuro table th, 
+body.tema-oscuro table td {
+    background-color: #3a3a3a;
+    color: #ffffff;
+}
+
+/* Inputs para modo oscuro */
+body.tema-oscuro input, 
+body.tema-oscuro select, 
+body.tema-oscuro textarea {
+    background-color: #a3a3a3;
+    color: #ffffff;
+    border: 1px solid #666666;
+}

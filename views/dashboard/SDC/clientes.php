@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>WorkWise - Clientes</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tus estilos personalizados -->
+    <link rel="stylesheet" href="../build/css/appwoo.css">
+
+    <!-- Script EXCELL -->
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- Librerias jsPDF y AutoTable para PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+
+    <style>
+        #tablaClientes {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        table {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index">
+        <div class="workwise-logo">
+            <div class="logo-icon">WW</div>
+        </div>
+    </a>
+        <div class="workwise-logo">
+        <span class="logo-text">WorkWise</span>
+    </div>
+    
+    <nav>
+        <a href="sectores">Sectores</a>
+        <a href="localidades">Localidades</a>
+        <a href="clientes">Clientes</a>
+        <a href="creditos">Créditos</a>
+        <a href="reportes">Datos</a>
+        <a href="configuracion">Perfil</a>
+    </nav>
+
+    <div class="botones">
+        <button onclick="cambiarTema()">Tema</button>
+        <button onclick="cerrarSesion()">Cerrar sesión</button>
+    </div>
+</header>
+
+<main class="container mt-3">
+    <h1 class="mb-4">Gestionar Clientes</h1>
+
+    <!-- Formulario de cliente -->
+    <form id="formCliente" class="row g-2 align-items-center mb-4">
+        <div class="col-auto">
+            <input type="text" id="nombre" class="form-control form-control-sm" placeholder="Nombre" required>
+        </div>
+        <div class="col-auto">
+            <input type="email" id="email" class="form-control form-control-sm" placeholder="Email" required>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="telefono" class="form-control form-control-sm" placeholder="Teléfono" required>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="direccion" class="form-control form-control-sm" placeholder="Dirección" required>
+        </div>
+        <div class="col-auto">
+            <select id="localidad" class="form-control form-control-sm" required>
+                <!-- Opciones de localidades estarán aquí -->
+            </select>
+        </div>
+        <div class="col-auto">
+            <select id="sector" class="form-control form-control-sm" required>
+                <!-- Opciones de sectores estarán aquí -->
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+        </div>
+    </form>
+
+<!-- Botones (derecha) -->
+<div class="col ms-auto text-end mb-2">
+    <button class="btn btn-success btn-sm me-2" onclick="exportarClientesExcel()">
+        📄 Excel
+    </button>
+    <button id="imprimirClientes" class="btn btn-danger btn-sm">
+        🖨️ PDF
+    </button>
+</div>
+    
+
+    <!-- Tabla de clientes -->
+    <div id="tablaClientes" class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Localidad</th>
+                    <th>Sector</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyClientes">
+                <!-- Clientes cargados aparecerán aquí -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mensajes de error -->
+    <div id="errorMessage" class="alert alert-danger mt-3 d-none small"></div>
+</main>
+
+<script>
+async function exportarClientesExcel() {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Clientes');
+
+    worksheet.columns = [
+        { header: 'Nombre', key: 'nombre', width: 25, style: { alignment: { horizontal: 'center' } } },
+        { header: 'Email', key: 'email', width: 30, style: { alignment: { horizontal: 'center' } } },
+        { header: 'Telefono', key: 'telefono', width: 20, style: { alignment: { horizontal: 'center' } } },
+        { header: 'Direccion', key: 'direccion', width: 30, style: { alignment: { horizontal: 'center' } } },
+        { header: 'Localidad', key: 'localidad', width: 20, style: { alignment: { horizontal: 'center' } } },
+        { header: 'Sector', key: 'sector', width: 20, style: { alignment: { horizontal: 'center' } } },
+    ];
+
+    const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+    clientes.forEach(c => worksheet.addRow(c));
+
+    worksheet.addTable({
+        name: 'ClientesTable',
+        ref: 'A1',
+        headerRow: true,
+        style: {
+            theme: 'TableStyleMedium1',
+            showRowStripes: true
+        },
+        columns: [
+            { name: 'Nombre' },
+            { name: 'Email' },
+            { name: 'Telefono' },
+            { name: 'Direccion' },
+            { name: 'Localidad' },
+            { name: 'Sector' }
+        ],
+        rows: clientes.map(c => [c.nombre, c.email, c.telefono, c.direccion, c.localidad, c.sector])
+    });
+
+    worksheet.eachRow((row, rowNumber) => {
+        row.eachCell((cell) => {
+            if (rowNumber === 1) {
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'D3D3D3' } };
+                cell.font = { bold: true, color: { argb: '000000' } };
+            }
+        });
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'clientes.xlsx';
+    link.click();
+}
+
+document.getElementById('imprimirClientes').addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+    if (clientes.length === 0) {
+        alert('No hay datos de clientes para imprimir.');
+        return;
+    }
+
+    const fecha = new Date().toLocaleDateString();
+
+    doc.setFontSize(12);
+    doc.text('Clientes', doc.internal.pageSize.width / 2, 20, { align: 'center' });
+
+    doc.autoTable({
+        startY: 30,
+        head: [['Nombre', 'Email', 'Teléfono', 'Dirección', 'Localidad', 'Sector']],
+        body: clientes.map(c => [c.nombre, c.email, c.telefono, c.direccion, c.localidad, c.sector]),
+        styles: {
+            fontSize: 8,
+            cellPadding: 2,
+            valign: 'middle',
+            halign: 'center',
+            overflow: 'linebreak'
+        },
+        headStyles: {
+            fillColor: [220, 220, 220],
+            textColor: 0,
+            fontStyle: 'bold',
+            halign: 'center'
+        },
+        alternateRowStyles: {
+            fillColor: [245, 245, 245]
+        },
+        theme: 'grid',
+        margin: { top: 30, bottom: 20 },
+        tableWidth: 'auto',
+    });
+
+    const pageHeight = doc.internal.pageSize.height;
+    const pageCount = doc.getNumberOfPages();
+
+    doc.setPage(pageCount);
+    doc.setFontSize(10);
+    doc.text(`Fecha: ${fecha}`, doc.internal.pageSize.width / 2, pageHeight - 10, { align: 'center' });
+
+    doc.setFontSize(8);
+    for (let i = 1; i <= pageCount; i++) {
+        doc.setPage(i);
+        doc.text(`Página ${i} de ${pageCount}`, doc.internal.pageSize.width - 30, pageHeight - 10, { align: 'right' });
+    }
+
+    doc.autoPrint();
+    window.open(doc.output('bloburl'), '_blank');
+});
+</script>
+
+
+<!-- Script para tema -->
+<script>
+function cambiarTema() {
+    document.body.classList.toggle('tema-oscuro');
+    const esTemaOscuro = document.body.classList.contains('tema-oscuro');
+    localStorage.setItem('tema', esTemaOscuro ? 'oscuro' : 'claro');
+}
+
+window.onload = function() {
+    const temaGuardado = localStorage.getItem('tema');
+    if (temaGuardado === 'oscuro') {
+        document.body.classList.add('tema-oscuro');
+    }
+    cargarClientes();
+    cargarSelects();
+}
+</script>
+
+<!-- Script para clientes -->
+<script>
+function cargarClientes() {
+    const tbody = document.getElementById('tbodyClientes');
+    tbody.innerHTML = '';
+
+    try {
+        const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+        clientes.forEach((cliente, index) => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${cliente.nombre}</td>
+                <td>${cliente.email}</td>
+                <td>${cliente.telefono}</td>
+                <td>${cliente.direccion}</td>
+                <td>${cliente.localidad}</td>
+                <td>${cliente.sector}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm me-1" onclick="editarCliente(${index})">Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarCliente(${index})">Eliminar</button>
+                </td>
+            `;
+            tbody.appendChild(fila);
+        });
+    } catch (error) {
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.textContent = 'Error cargando clientes: ' + error.message;
+        errorMessage.classList.remove('d-none');
+    }
+}
+
+function cargarSelects() {
+    const localidades = JSON.parse(localStorage.getItem('localidades') || '[]');
+    const sectores = JSON.parse(localStorage.getItem('sectores') || '[]');
+    
+    const localidadSelect = document.getElementById('localidad');
+    localidades.forEach(localidad => {
+        const option = document.createElement('option');
+        option.value = localidad.nombre;
+        option.textContent = localidad.nombre;
+        localidadSelect.appendChild(option);
+    });
+
+    const sectorSelect = document.getElementById('sector');
+    sectores.forEach(sector => {
+        const option = document.createElement('option');
+        option.value = sector.nombre;
+        option.textContent = sector.nombre;
+        sectorSelect.appendChild(option);
+    });
+}
+
+document.getElementById('formCliente').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const direccion = document.getElementById('direccion').value.trim();
+    const localidad = document.getElementById('localidad').value.trim();
+    const sector = document.getElementById('sector').value.trim();
+
+    const clientes = JSON.parse(localStorage.getItem('clientes') || '[]');
+
+    clientes.push({ nombre, email, telefono, direccion, localidad, sector });
+    localStorage.setItem('clientes', JSON.stringify(clientes));
+    cargarClientes();
+    this.reset();
+});
+
+function editarCliente(index) {
+    const clientes = JSON.parse(localStorage.getItem('clientes'));
+    const cliente = clientes[index];
+    document.getElementById('nombre').value = cliente.nombre;
+    document.getElementById('email').value = cliente.email;
+    document.getElementById('telefono').value = cliente.telefono;
+    document.getElementById('direccion').value = cliente.direccion;
+    document.getElementById('localidad').value = cliente.localidad;
+    document.getElementById('sector').value = cliente.sector;
+    clientes.splice(index, 1);
+    localStorage.setItem('clientes', JSON.stringify(clientes));
+    cargarClientes();
+}
+
+function eliminarCliente(index) {
+    const clientes = JSON.parse(localStorage.getItem('clientes'));
+    clientes.splice(index, 1);
+    localStorage.setItem('clientes', JSON.stringify(clientes));
+    cargarClientes();
+}
+</script>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
+
+<?php include_once __DIR__ . "/../../../chat-v3/index.php"; ?>
