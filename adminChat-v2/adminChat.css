@@ -1,0 +1,248 @@
+.adminChat > body{
+	background-color: #0D1117;
+}
+.error{
+	margin: auto;
+	color: white;
+	text-align: center;
+}
+
+.adminChat *{
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+}
+
+.list-chat{
+	display: block;
+	align-items: center;
+	align-content: center;
+	width: 80%;
+	margin: auto;
+}
+
+.list-chat .item-list-chat{
+	list-style: none;
+	color: white;
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+.item-list-chat > table{
+	box-shadow: -1px 1px 10px 0px black;
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: 1em;
+	background-color: #3D444D;
+
+}
+
+.item-list-chat-name{
+	padding-left: 5%;
+	width: 30%;
+	text-overflow: ellipsis;
+}
+
+.item-list-chat-users{
+	padding-top: 1%;
+	padding-bottom: 1%;
+}
+
+.item-list-chat-users h3{
+	margin: auto;
+	margin-bottom: 2%;
+}
+
+.item-list-chat-users-user{
+	display: flex;
+	flex-flow: column;
+	color: green;
+}
+
+.item-list-chat-users-user-name{
+	text-overflow: ellipsis;
+	padding-top: 1%;
+	border-top: 1px solid gray;
+	width: 80%;
+}
+
+.item-list-chat-users-user-email{
+	padding-bottom: 1%;
+	text-overflow: ellipsis;
+	border-bottom: 1px solid gray;
+	width: 80%;
+	text-align: right;
+	color: grey;
+}
+
+.item-list-chat-btn{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	width: 12%;
+}
+
+.item-list-chat-btn button{
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	border: none;
+	cursor: pointer;
+	border-radius: 0.5em;
+	width: 80%;
+	padding-bottom: 5%;
+	padding-top: 5%;
+}
+
+#chat-modify{
+	background-color: #f39c12;
+}
+
+#chat-modify:hover{
+	color: white;
+	background-color: #a96d0d;
+}
+
+#chat-modify:active{
+	color: white;
+	background-color: #71490b;
+}
+
+#chat-delete{
+	background-color: red;
+}
+
+#chat-delete:hover{
+	color: white;
+	background-color: darkred;
+}
+
+#chat-delete:active{
+	background-color: darkred;
+}
+
+.list-chat-title{
+	text-align: center;
+	width: 100%;
+	color: white;
+}
+
+#chat-new{
+	display: block;
+	align-items: center;
+	align-content: center;
+	margin: auto;
+	font-size: 100%;
+	border: none;
+	padding: 1em;
+	border-radius: 0.5em;
+	color: white;
+	background-color: #2e86c1;
+}
+
+.pos-fixed{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.pos-fixed > div{
+	display: grid;
+	place-items: center;
+	height: 100vh;
+}
+
+.blur{
+	backdrop-filter: blur(10px);
+}
+
+.box-creating-chat, .box-updating-chat{
+	background-color: #3D444D;
+	display: flex;
+	flex-direction: column;
+	color: white;
+	transition-duration: 0.3s;
+	position: fixed;
+	padding: 2em;
+	border-radius: 2em;
+	box-shadow: 0px 5px 20px 2px black;
+}
+
+.box-creating-chat *, .box-updating-chat *{
+	margin: auto;
+}
+.box-creating-chat button, .box-updating-chat button{
+	margin: 10px;
+	padding: 0.5em;
+}
+.box-creating-chat select, .box-updating-chat select{
+	border: none;
+	color: white;
+	padding: 0.5em;
+	background-color: #333940;
+}
+
+.box-creating-chat input[type="text"], .box-updating-chat input[type="text"]{
+	padding: 0.5em;
+	color: white;
+	border: none;
+	background-color: #333940;
+}
+
+.box-creating-chat > div, .box-updating-chat > div{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: white;
+	display: flex;
+	float: left;
+}
+
+#list-names-updating-chat, #list-names-creating-chat{
+	width: 80%;
+	padding: 5%;
+	background-color: #333940;
+	display: flex;
+	flex-direction: column;
+	border-radius: 1em;
+}
+
+.user-action-chat{
+	display: grid;
+	justify-items: center;
+}
+
+.user-action-chat span{
+	margin-top: 10px;
+	margin: 0;
+}
+
+.user-action-chat button{
+	color: white;
+	margin: 0;
+	cursor: pointer;
+	border-radius: 0.5em;
+	border: none;
+	background-color: darkred;
+	margin-bottom: 10px;
+}
+
+#cancel-creating-chat, #cancel-updating-chat{
+	box-shadow: 0px 0px 2px 0px black;
+	border-radius: 0.5em;
+	cursor: pointer;
+	border: none;
+	background-color: red;
+}
+
+#send-updating-chat, #send-creating-chat{
+	box-shadow: 0px 0px 2px 0px black;
+	border-radius: 0.5em;
+	cursor: pointer;
+	border: none;
+	background-color: green;
+}
+
+#accept-name-creating-chat, #accept-name-updating-chat{
+	border: none;
+	border-radius: 0.5em;
+	background-color: orange;
+}

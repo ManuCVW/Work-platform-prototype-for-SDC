@@ -1,0 +1,314 @@
+.chat{
+	width: 40%;
+	display: flex;
+	position: fixed;
+	z-index: 10;
+	right: 20px;
+	bottom: 20px;
+	float: left;
+	align-items: end;
+}
+
+.box-chat{
+	width: 50%;
+	display: inline-block;
+	text-align: right;
+}
+
+.content-box-chat{
+	bottom: 0;
+	color: white;
+	height: 0vh;
+	background-color: #0D1117;
+	text-align: center;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	overflow-y: auto;
+	border-radius: 0px 0px 10px 10px;
+	box-shadow: -3px 3px 10px 0px darkgray;
+	transition-duration: 0.5s;
+	transition-property: all;
+	display: flex;
+	flex-direction: column;
+}
+
+.box-chat[isactive="true"] .content-box-chat{
+	height: 40vh;
+}
+
+.box-chat[isactive="false"] .content-box-chat{
+	height: 0vh;
+	visibility: hidden;
+}
+
+.box-chat[isactive="true"] .top-box-chat{
+	visibility: visible;
+}
+
+.box-chat[isactive="true"] .top-box-chat *{
+	transition-duration: 0.3s;
+	width: 10px;
+	margin-top: 5px;
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.box-chat[isactive="false"] .top-box-chat{
+	transition-delay: 0.6s;
+	visibility: hidden;
+}
+
+.box-chat[isactive="false"] .top-box-chat *{
+	transition-delay: 0.3s;
+	transition-duration: 0.3s;
+	width: 0px;
+	font-size: 0px;
+	visibility: hidden;
+}
+
+.box-chat[isactive="false"] #img-chat{
+	transition-duration: 0.5s;
+	visibility: visible;
+}
+
+.box-chat[isactive="true"] #img-chat{
+	padding: 0px;
+	max-width: 0px;
+	transition-duration: 0.5s;
+	rotate: 360deg;
+	background-color: transparent;
+	visibility: hidden;
+}
+
+.top-box-chat{
+	padding-top: 0%;
+	border-radius: 10px 10px 0px 0px;
+	background-color: #3D444D;
+	box-shadow: -3px 3px 10px 0px darkgray;
+}
+
+.top-box-chat b{
+	color: white;
+	right: 27%;
+	position: absolute;
+}
+
+#close-chat{
+	cursor: pointer;
+	border: none;
+	box-sizing: content-box;
+	margin-right: 5px;
+	background-color: #3D444D;
+	border-radius: 50%;
+}
+
+#close-chat:hover{
+	background-color: gray;
+}
+
+#close-chat *{
+	max-width: 100%;
+}
+
+#img-chat{
+	border: none;
+	cursor: pointer;
+	box-sizing: content-box;
+	padding: 15px;
+	background-color: skyblue;
+	border-radius: 50%;
+	margin: 5%;
+	max-width: 30px;
+	box-shadow: -3px 3px 10px 0px darkgray;
+}
+
+#img-chat *{
+	max-width: 100%;
+}
+
+.selection-chat{
+	border: none;
+	cursor: pointer;
+	padding: 10px 0px 10px 0px;
+	background-color: #0D1117;
+	color: white;
+	border-bottom: 1px solid gray;
+}
+
+.selection-chat:hover{
+	background-color: #3D444D;
+}
+
+.sending-chat{
+	margin-right: 10px;
+	width: 50%;
+	display: inline-block;
+	text-align: right;
+}
+
+.top-sending-chat{
+	border-radius: 10px 10px 0px 0px;
+	background-color: #3D444D;
+	box-shadow: -3px 3px 10px 0px darkgray;
+	transition-delay: 0.6s;
+	visibility: hidden;
+}
+
+.top-sending-chat *{
+	transition-delay: 0.3s;
+	transition-duration: 0.3s;
+	width: 0px;
+	font-size: 0px;
+	visibility: hidden;
+}
+
+.top-sending-chat b{
+	color: white;
+	right: 95%;
+	position: absolute;
+	box-sizing: content-box;
+	text-overflow: ellipsis;
+	max-width: 20px;
+}
+
+.content-sending-chat{
+	bottom: 0;
+	color: white;
+	height: 31vh;
+	background-color: #0D1117;
+	text-align: center;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+	overflow-y: auto;
+	box-shadow: -3px 3px 10px 0px darkgray;
+	transition-duration: 0.5s;
+	transition-property: all;
+	display: flex;
+	flex-direction: column;
+	height: 0vh;
+	visibility: hidden;
+}
+
+.message-sending-chat{
+	bottom: 0;
+	color: white;
+	height: 0vh;
+	max-width: 100%;
+	background-color: #0D1117;
+	text-align: center;
+	border-radius: 0px 0px 10px 10px;
+	box-shadow: -3px 3px 10px 0px darkgray;
+	transition-duration: 0.5s;
+	transition-property: all;
+	visibility: hidden;
+	overflow-y: hidden;
+}
+
+.message-sending-chat *{
+	width: 100%;
+	margin-top: 1vh;
+}
+
+.message-sending-chat #txt-send-chat{
+	border-radius: 10px;
+	background-color: #3D444D;
+	border: none;
+	padding: 1vh;
+	color: white;
+}
+
+.message-sending-chat #btn-send-chat{
+	cursor: pointer;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+	border-radius: 10px;
+	border: none;
+	background-color: gray;
+	transition-duration: 0.5s;
+}
+.message-sending-chat #btn-send-chat:hover{
+	background-color: white;
+}
+
+#close-sending-chat, #hide-sending-chat{
+	cursor: pointer;
+	border: none;
+	box-sizing: content-box;
+	margin-right: 5px;
+	background-color: #3D444D;
+	border-radius: 50%;
+}
+
+#hide-sending-chat{
+	transition-duration: 0.5s;
+	rotate: 90deg;
+}
+
+#close-sending-chat:hover, #hide-sending-chat:hover{
+	background-color: gray;
+}
+
+#close-sending-chat *, #hide-sending-chat *{
+	max-width: 100%;
+}
+
+.sending-chat[active] .content-sending-chat{
+	visibility: visible;
+	height: 31vh;
+}
+
+.sending-chat[active] .top-sending-chat{
+	transition-delay: 0s;
+	visibility: visible;
+}
+
+.sending-chat[active] .top-sending-chat *{
+	transition-delay: 0s;
+	transition-duration: 0.3s;
+	width: 10px;
+	margin-top: 5px;
+	border-radius: 10px 10px 0px 0px;
+	font-size: 20px;
+	margin-bottom: 5px;
+	visibility: visible;
+}
+
+.sending-chat[active] .message-sending-chat{
+	visibility: visible;
+	transition-duration: 0.5s;
+	height: 9vh;
+}
+
+.sending-chat[active][hide] .content-sending-chat{
+	transition-duration: 0.5s;
+	transition-property: all;
+	height: 0vh;
+	visibility: hidden;
+}
+.sending-chat[active][hide] .top-sending-chat{
+	transition-delay: 0.3s;
+	transition-duration: 0.2s;
+	border-radius: 10px 10px 10px 10px;
+}
+
+.sending-chat[active][hide] #hide-sending-chat{
+	rotate: -90deg;
+}
+
+.sending-chat[active][hide] .message-sending-chat{
+	transition-duration: 0.5s;
+	height: 0vh;
+	visibility: hidden;
+}
+
+.msg{
+	background-color: gray;
+}
+
+.msg-self{
+	background-color: skyblue;
+}
+
+.msg-self .msg-header *{
+	content: 'Tú';
+}
